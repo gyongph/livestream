@@ -3,7 +3,7 @@ import Hls from "hls.js";
 import hls from "hls.js";
 import React, { ElementRef, useEffect } from "react";
 import ReactHlsPlayer from "react-hls-player";
-const page: React.FC = () => {
+const Page: React.FC = () => {
   const playerRef = React.useRef<HTMLVideoElement>(null);
   useEffect(() => {
     if (playerRef.current) {
@@ -32,4 +32,4 @@ const page: React.FC = () => {
   );
 };
 
-export default page;
+export default Page;
