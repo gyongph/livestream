@@ -9,12 +9,16 @@ const Page: React.FC<{ searchParams: { guestID: string } }> = ({
   useEffect(() => {
     if (playerRef.current) {
       const hls = new Hls();
-      hls.loadSource(`https://54.253.18.118:4343//${guestID}/master.m3u8`);
+      hls.loadSource(
+        `https://livestream.gybeongotan.dev:4343/${guestID}/master.m3u8`
+      );
       hls.attachMedia(playerRef.current);
       hls.on(Hls.Events.ERROR, (err, data) => {
         console.log(err, data);
         hls.recoverMediaError();
-        hls.loadSource(`https://54.253.18.118:4343//${guestID}/master.m3u8`);
+        hls.loadSource(
+          `https://livestream.gybeongotan.dev:4343/${guestID}/master.m3u8`
+        );
         // hls.loadSource(`https://192.168.100.7:4343/${guestID}/master.m3u8`);
       });
       hls.on(Hls.Events.FRAG_PARSING_INIT_SEGMENT, function (event, data) {

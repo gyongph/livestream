@@ -10,7 +10,7 @@ const getDevices = async () => {
 const uploadBuffer = (guestID: string, data: Blob) => {
   const formData = new FormData();
   formData.append("chunk", data);
-  fetch(`https://54.253.18.118:4343/live?guestID=${guestID}`, {
+  fetch(`https://livestream.gybeongotan.dev:4343/live?guestID=${guestID}`, {
     method: "post",
     body: formData,
   });
@@ -49,6 +49,7 @@ export default function HomeV2() {
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then(async (mediaStream) => {
+        console.log("got streawm")
         mediaStream.getVideoTracks()[0].applyConstraints({ frameRate: 30 });
         let chunks: Blob[] = [];
         recorderRef.current = new MediaRecorder(mediaStream.clone(), {
@@ -86,6 +87,7 @@ export default function HomeV2() {
         };
       })
       .catch((err) => {
+        console.log(err)
         // socket.on("message", (data) => console.log(data));
         // console.error(`${err.name}: ${err.message}`);
       });
@@ -104,7 +106,7 @@ export default function HomeV2() {
       <br />
       {!live && (
         <button
-          onClick={startLive}
+          onClick={()=>startLive()}
           className="bg-green-500 hover:bg-green-700 text-white py-3 px-6 rounded"
         >
           START
