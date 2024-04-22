@@ -2,7 +2,7 @@
 
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile, toBlobURL } from "@ffmpeg/util";
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import { Observable } from "rxjs";
 import { from } from "rxjs";
 import delay from "../../utils/delay";
@@ -10,6 +10,7 @@ import delay from "../../utils/delay";
 const CHUNK_SIZE = 1024 * 1024; // 1MB chunks
 
 export default function Home() {
+  const guestID = useId()
   const [logs, setLogs] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -102,7 +103,7 @@ export default function Home() {
 
   const record = () => {
     const constraints: MediaStreamConstraints = {
-      audio: { autoGainControl: false, noiseSuppression: false },
+      audio: { autoGainControl: false, noiseSuppression: false,},
       video: true,
       // audio: {
       //   noiseSuppression: false,
@@ -126,7 +127,7 @@ export default function Home() {
         const ffmpeg = ffmpegRef.current;
         let chunks: Blob[] = [];
         const recorder = new MediaRecorder(mediaStream.clone(), {
-          videoBitsPerSecond: 6000 * 1000,
+          videoBitsPerSecond: 12000 * 1000,
           mimeType: "video/webm; codecs=h264",
         });
         recorder.onstop = async () => {
@@ -149,12 +150,18 @@ export default function Home() {
               [
                 "-i",
                 `input${oldCount}.webm`,
+                "-g",
+                "10",
+                "-sc_threshold",
+                "0",
+                "-reset_timestamps",
+                "1",
                 "-c:v",
                 "copy",
                 "-c:a",
                 "mp3",
                 "-loglevel",
-                "debug",
+                "quiet",
                 "-f",
                 "hls",
                 "-hls_time",
@@ -232,6 +239,7 @@ export default function Home() {
   };
   return loaded ? (
     <div className="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+      <div>{guestID}</div>
       <video ref={videoRef} controls></video>
       <br />
       <button

@@ -1,25 +1,27 @@
 "use client";
 import Hls from "hls.js";
-import hls from "hls.js";
+import { NextPage } from "next";
 import React, { ElementRef, useEffect } from "react";
-import ReactHlsPlayer from "react-hls-player";
-const Page: React.FC = () => {
+const Page: React.FC<{ searchParams: { guestID: string } }> = ({
+  searchParams: { guestID },
+}) => {
   const playerRef = React.useRef<HTMLVideoElement>(null);
   useEffect(() => {
     if (playerRef.current) {
       const hls = new Hls();
-      hls.loadSource("https://192.168.100.7:4343/master.m3u8");
+      hls.loadSource(`https://54.253.18.118:4343//${guestID}/master.m3u8`);
       hls.attachMedia(playerRef.current);
       hls.on(Hls.Events.ERROR, (err, data) => {
         console.log(err, data);
         hls.recoverMediaError();
-        hls.loadSource("https://192.168.100.7:4343/master.m3u8");
+        hls.loadSource(`https://54.253.18.118:4343//${guestID}/master.m3u8`);
+        // hls.loadSource(`https://192.168.100.7:4343/${guestID}/master.m3u8`);
       });
       hls.on(Hls.Events.FRAG_PARSING_INIT_SEGMENT, function (event, data) {
         console.log(data);
       });
     }
-  }, [playerRef]);
+  }, [playerRef.current]);
   return (
     <div className="w-full h-full">
       <video
