@@ -1,6 +1,5 @@
 "use client";
 import { v4 } from "uuid";
-import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { useRef, useState } from "react";
 
 const getDevices = async () => {
@@ -24,7 +23,6 @@ export default function HomeV2() {
   const [logs, setLogs] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const ffmpegRef = useRef(new FFmpeg());
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const recorderRef = useRef<MediaRecorder | null>(null);
   const socketRef = useRef<WebSocket | null>(null);
