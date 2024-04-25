@@ -1,7 +1,7 @@
 "use client";
 import { v4 } from "uuid";
 import { useRef, useState } from "react";
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const getDevices = async () => {
   const list = await navigator.mediaDevices.enumerateDevices();
   console.log(list);
@@ -10,7 +10,7 @@ const getDevices = async () => {
 const uploadBuffer = (guestID: string, data: Blob) => {
   const formData = new FormData();
   formData.append("chunk", data);
-  fetch(`https://livestream.gybeongotan.dev:4343/live?guestID=${guestID}`, {
+  fetch(`${API_URL}/live?guestID=${guestID}`, {
     method: "post",
     body: formData,
   });
@@ -49,7 +49,7 @@ export default function HomeV2() {
     navigator.mediaDevices
       .getUserMedia(constraints)
       .then(async (mediaStream) => {
-        console.log("got streawm")
+        console.log("got streawm");
         mediaStream.getVideoTracks()[0].applyConstraints({ frameRate: 30 });
         let chunks: Blob[] = [];
         recorderRef.current = new MediaRecorder(mediaStream.clone(), {
@@ -87,7 +87,7 @@ export default function HomeV2() {
         };
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         // socket.on("message", (data) => console.log(data));
         // console.error(`${err.name}: ${err.message}`);
       });
@@ -98,7 +98,7 @@ export default function HomeV2() {
       {viewPreviewLink && (
         <div className="my-10 text-blue-500">
           <a href={`/viewer/?guestID=${guestID}`} target="_blank">
-            LIVE STREAM LINK 
+            LIVE STREAM LINK
           </a>
         </div>
       )}
@@ -106,7 +106,7 @@ export default function HomeV2() {
       <br />
       {!live && (
         <button
-          onClick={()=>startLive()}
+          onClick={() => startLive()}
           className="bg-green-500 hover:bg-green-700 text-white py-3 px-6 rounded"
         >
           START

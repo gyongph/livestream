@@ -2,6 +2,8 @@
 import Hls from "hls.js";
 import { NextPage } from "next";
 import React, { ElementRef, useEffect } from "react";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const Page: React.FC<{ searchParams: { guestID: string } }> = ({
   searchParams: { guestID },
 }) => {
@@ -9,16 +11,12 @@ const Page: React.FC<{ searchParams: { guestID: string } }> = ({
   useEffect(() => {
     if (playerRef.current) {
       const hls = new Hls();
-      hls.loadSource(
-        `https://livestream.gybeongotan.dev:4343/${guestID}/master.m3u8`
-      );
+      hls.loadSource(`${API_URL}/${guestID}/master.m3u8`);
       hls.attachMedia(playerRef.current);
       hls.on(Hls.Events.ERROR, (err, data) => {
         console.log(err, data);
         hls.recoverMediaError();
-        hls.loadSource(
-          `https://livestream.gybeongotan.dev:4343/${guestID}/master.m3u8`
-        );
+        hls.loadSource(`${API_URL}/${guestID}/master.m3u8`);
         // hls.loadSource(`https://192.168.100.7:4343/${guestID}/master.m3u8`);
       });
       hls.on(Hls.Events.FRAG_PARSING_INIT_SEGMENT, function (event, data) {
