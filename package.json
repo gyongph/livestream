@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3001 --experimental-https",
+    "dev": "next dev --port 5000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -21,6 +21,7 @@
     "postcss": "8.4.31",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^5.1.0",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6",
     "uuid": "^9.0.1"

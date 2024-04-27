@@ -9,14 +9,17 @@ const Page: React.FC<{ searchParams: { guestID: string } }> = ({
 }) => {
   const playerRef = React.useRef<HTMLVideoElement>(null);
   useEffect(() => {
-    if (playerRef.current) {
+    if (playerRef.current instanceof Element) {
       const hls = new Hls();
-      hls.loadSource(`${API_URL}/${guestID}/master.m3u8`);
+      hls.loadSource(`${API_URL}/live/${guestID}/master.m3u8`);
       hls.attachMedia(playerRef.current);
       hls.on(Hls.Events.ERROR, (err, data) => {
         console.log(err, data);
-        hls.recoverMediaError();
-        hls.loadSource(`${API_URL}/${guestID}/master.m3u8`);
+        setTimeout(() => hls.recoverMediaError(), 5000);
+        // setTimeout(
+        //   () => hls.loadSource(`${API_URL}/live/${guestID}/master.m3u8`),
+        //   1000
+        // );
         // hls.loadSource(`https://192.168.100.7:4343/${guestID}/master.m3u8`);
       });
       hls.on(Hls.Events.FRAG_PARSING_INIT_SEGMENT, function (event, data) {
