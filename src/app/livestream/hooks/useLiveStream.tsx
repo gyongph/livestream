@@ -22,13 +22,13 @@ export let context: Context<{
   havePermission: boolean;
   playerRef: RefObject<HTMLVideoElement>;
   setLiveState: Dispatch<SetStateAction<LiveState>>;
-  deviceCapabilities?: any;
+  debugInfo?: any;
 }>;
 
 export default function useLiveStream() {
   const [stream, setStream] = useState<MediaStream>();
   const [havePermission, setHavePermission] = useState(false);
-  const [deviceCapabilities, setDeviceCapabilities] = useState("");
+  const [debugInfo, setDebugInfo] = useState("");
   const [liveState, setLiveState] = useState<LiveState>({
     isActive: false,
     audio: false,
@@ -65,7 +65,7 @@ export default function useLiveStream() {
         device.deviceId !== videoSettings?.deviceId &&
         device.kind === "videoinput"
     );
-    setDeviceCapabilities(
+    setDebugInfo(
       JSON.stringify({ videoSettings, devices, otherVideoInput }, null, 2)
     );
   };
@@ -81,5 +81,5 @@ export default function useLiveStream() {
     if (typeof window === "undefined") return;
     getMediaStream();
   }, []);
-  return { playerRef, liveState, stream, deviceCapabilities };
+  return { playerRef, liveState, stream, debugInfo };
 }

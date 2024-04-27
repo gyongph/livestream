@@ -6,6 +6,7 @@ export const useController = () => {
   const ctx = useContext(context);
   return {
     liveState: ctx.liveState,
+    debugInfo: ctx.debugInfo,
     toggleMic() {
       if (!(ctx.stream instanceof MediaStream)) return;
       const audioTrack = ctx.stream.getAudioTracks().pop();
@@ -32,7 +33,6 @@ export const useController = () => {
         (device) =>
           device.deviceId !== oldVideoDeviceId && device.kind === "videoinput"
       );
-      console.log(newVideoDevice);
       if (!newVideoDevice) return;
       const videoStream = await navigator.mediaDevices.getUserMedia({
         video: { deviceId: newVideoDevice.deviceId },

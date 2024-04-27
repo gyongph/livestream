@@ -1,8 +1,5 @@
 "use client";
 
-import { BsMicFill, BsMicMuteFill } from "react-icons/bs";
-import { FaEye } from "react-icons/fa";
-import { MdCameraswitch, MdExitToApp } from "react-icons/md";
 import useLiveStream from "./livestream/hooks/useLiveStream";
 import {
   LiveAudienceCountIndicator,
@@ -11,17 +8,18 @@ import {
   CamController,
   StopLiveStreamBtn,
   CamFacingModeController,
+  DebugInfo,
 } from "./livestream/components";
 
-export default function Page() {
-  const { playerRef, deviceCapabilities } = useLiveStream();
+export default function Page({ searchParams: { debugMode = false } }) {
+  const { playerRef } = useLiveStream();
   return (
     <div className="bg-black relative">
       <div className="w-dvw h-dvh mt-0 relative">
         {playerRef && (
           <video
             onClick={(e) => {
-              if (e.target instanceof HTMLVideoElement) { 
+              if (e.target instanceof HTMLVideoElement) {
                 if (e.target.paused) e.target.play();
                 else e.target.pause();
               }
@@ -42,9 +40,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="whitespace-pre-line text-white break-all">
-        {deviceCapabilities}
-      </div>
+      {debugMode && <DebugInfo />}
     </div>
   );
 }
