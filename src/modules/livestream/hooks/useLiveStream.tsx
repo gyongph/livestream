@@ -59,7 +59,9 @@ export function useLiveStream(options: LiveStreamInitOptions) {
     const requestStream = await window.navigator.mediaDevices
       .getUserMedia({
         audio: true,
-        video: true,
+        video: {
+          aspectRatio: 9 / 16,
+        },
       })
       .catch((err) => console.log({ err }));
     if (!requestStream) return setHavePermission(false);
@@ -70,7 +72,8 @@ export function useLiveStream(options: LiveStreamInitOptions) {
       video: true,
       status: "waiting",
     });
-    const videoSettings = requestStream.getVideoTracks().pop()?.getSettings();
+    const videoTrack = requestStream.getVideoTracks().pop()
+    const videoSettings = videoTrack?.getSettings();
     const devices = await navigator.mediaDevices.enumerateDevices();
     const otherVideoInput = devices.find(
       (device) =>
