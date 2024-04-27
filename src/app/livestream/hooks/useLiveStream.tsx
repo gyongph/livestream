@@ -64,7 +64,17 @@ export default function useLiveStream() {
     const videoTracks = requestStream.getVideoTracks().pop();
     if (!videoTracks) return;
     const settings = videoTracks.getCapabilities() || {};
-    setDeviceCapabilities(JSON.stringify(settings));
+    const mediaCapabilities = navigator.mediaCapabilities;
+    const supportedConstraints =
+      navigator.mediaDevices.getSupportedConstraints();
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    setDeviceCapabilities(
+      JSON.stringify(
+        { settings, mediaCapabilities, supportedConstraints, devices },
+        undefined,
+        2
+      )
+    );
   };
 
   useEffect(() => {
