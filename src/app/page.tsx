@@ -14,7 +14,7 @@ import {
 } from "./livestream/components";
 
 export default function Page() {
-  const { playerRef } = useLiveStream();
+  const { playerRef,deviceCapabilities } = useLiveStream();
   return (
     <div className="bg-black relative">
       <div className="w-dvw h-dvh mt-0 relative">
@@ -30,6 +30,8 @@ export default function Page() {
           <MicController />
         </div>
       </div>
+
+      <div className="whitespace-pre-wrap">{deviceCapabilities}</div>
     </div>
   );
 }

@@ -58,6 +58,8 @@ export default function useLiveStream() {
       video: true,
       isActive: true,
     });
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    setDeviceCapabilities(JSON.stringify(devices, null, 2));
   };
 
   useEffect(() => {
