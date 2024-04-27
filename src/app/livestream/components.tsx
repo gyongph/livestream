@@ -17,10 +17,10 @@ export function LiveStateIndicator() {
   const ctx = useLiveStreamContext();
   return (
     <div
-      data-active={ctx.liveState.isActive}
-      className="data-[active=true]:bg-red-500 bg-slate-600 text-white px-5 rounded-full w-fit absolute top-3 left-3"
+      data-active={ctx.liveState.status === "live"}
+      className="data-[active=true]:bg-red-500 bg-slate-600 text-white px-5 rounded-full w-fit absolute top-3 left-3 uppercase"
     >
-      {ctx.liveState.isActive ? "LIVE" : "OFFLINE"}
+      {ctx.liveState.status}
     </div>
   );
 }

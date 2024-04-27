@@ -11,7 +11,7 @@ import {
 } from "react";
 
 type LiveState = {
-  isActive: boolean;
+  status: "initializing" | "waiting" | "live" | "idle" | "ended" | "error";
   audio: boolean;
   video: boolean;
 };
@@ -31,7 +31,7 @@ export default function useLiveStream() {
   const [havePermission, setHavePermission] = useState(false);
   const [debugInfo, setDebugInfo] = useState("");
   const [liveState, setLiveState] = useState<LiveState>({
-    isActive: false,
+    status: "initializing",
     audio: false,
     video: false,
   });
@@ -57,7 +57,7 @@ export default function useLiveStream() {
     setLiveState({
       audio: true,
       video: true,
-      isActive: true,
+      status: "waiting",
     });
     const videoSettings = requestStream.getVideoTracks().pop()?.getSettings();
     const devices = await navigator.mediaDevices.enumerateDevices();

@@ -7,6 +7,7 @@ export const useController = () => {
     liveState: ctx.liveState,
     debugInfo: ctx.debugInfo,
     toggleMic() {
+      if (ctx.liveState.status === "ended") return;
       if (!(ctx.stream instanceof MediaStream)) return;
       const audioTrack = ctx.stream.getAudioTracks().pop();
       if (!audioTrack) return;
@@ -14,6 +15,7 @@ export const useController = () => {
       ctx.setLiveState({ ...ctx.liveState, audio: !ctx.liveState.audio });
     },
     toggleCam() {
+      if (ctx.liveState.status === "ended") return;
       if (!(ctx.stream instanceof MediaStream)) return;
       const videoTrack = ctx.stream.getVideoTracks().pop();
       if (!videoTrack) return;
@@ -21,6 +23,7 @@ export const useController = () => {
       ctx.setLiveState({ ...ctx.liveState, video: !ctx.liveState.video });
     },
     async toggleCamFacingMode() {
+      if (ctx.liveState.status === "ended") return;
       if (!(ctx.stream instanceof MediaStream)) return;
       const oldVideoTrack = ctx.stream.getVideoTracks().pop();
       if (!oldVideoTrack) return;
@@ -44,12 +47,13 @@ export const useController = () => {
       ctx.setLiveState({ ...ctx.liveState, video: true });
     },
     endLiveStream() {
+      if (ctx.liveState.status === "ended") return;
       if (!(ctx.stream instanceof MediaStream)) return;
       const audioTrack = ctx.stream.getAudioTracks().pop();
       const videoTrack = ctx.stream.getVideoTracks().pop();
       audioTrack?.stop();
       videoTrack?.stop();
-      ctx.setLiveState({ isActive: false, video: false, audio: false });
+      ctx.setLiveState({ status: "ended", video: false, audio: false });
     },
   };
 };
