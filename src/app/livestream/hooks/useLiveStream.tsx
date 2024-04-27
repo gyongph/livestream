@@ -14,7 +14,6 @@ type LiveState = {
   isActive: boolean;
   audio: boolean;
   video: boolean;
-  facingMode?: "user" | "environment";
 };
 
 export let context: Context<{
@@ -34,7 +33,6 @@ export default function useLiveStream() {
     isActive: false,
     audio: false,
     video: false,
-    facingMode: "user",
   });
   const playerRef = useRef<ElementRef<"video">>(null);
   context = createContext({
@@ -59,22 +57,7 @@ export default function useLiveStream() {
       audio: true,
       video: true,
       isActive: true,
-      facingMode: "environment",
     });
-    const videoTracks = requestStream.getVideoTracks().pop();
-    if (!videoTracks) return;
-    const settings = videoTracks.getCapabilities() || {};
-    const mediaCapabilities = navigator.mediaCapabilities;
-    const supportedConstraints =
-      navigator.mediaDevices.getSupportedConstraints();
-    const devices = await navigator.mediaDevices.enumerateDevices();
-    setDeviceCapabilities(
-      JSON.stringify(
-        { settings, mediaCapabilities, supportedConstraints, devices },
-        undefined,
-        2
-      )
-    );
   };
 
   useEffect(() => {

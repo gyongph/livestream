@@ -23,20 +23,19 @@ export const useController = () => {
       if (!(ctx.stream instanceof MediaStream)) return;
       const oldVideoTrack = ctx.stream.getVideoTracks().pop();
       if (!oldVideoTrack) return;
-      const oldMode = ctx.liveState.facingMode;
-      const newMode = oldMode === "user" ? "environment" : "user";
+      const oldVideoDeviceId = oldVideoTrack.getSettings().deviceId;
+      const newVideoDevice = (
+        await navigator.mediaDevices.enumerateDevices()
+      ).find((device) => device.deviceId !== oldVideoDeviceId);
+      if (!newVideoDevice) return;
       const videoStream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: newMode },
+        video: { deviceId: newVideoDevice.deviceId },
       });
       const newVideoTrack = videoStream.getVideoTracks().pop();
       if (!newVideoTrack) return;
       oldVideoTrack.stop();
       ctx.stream.removeTrack(oldVideoTrack);
       ctx.stream.addTrack(newVideoTrack);
-      ctx.setLiveState({
-        ...ctx.liveState,
-        facingMode: newMode,
-      });
     },
     endLiveStream() {
       if (!(ctx.stream instanceof MediaStream)) return;
