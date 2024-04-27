@@ -15,18 +15,27 @@ type LiveState = {
   audio: boolean;
   video: boolean;
 };
-type ReturnType = {
+
+type LiveStreamInitOptions = {
+  streamIngestURL: string;
+  onEnded?: Function;
+  onError?: Function;
+};
+
+type LiveStreamReturnType = {
   liveState: LiveState;
   stream?: MediaStream;
   havePermission: boolean;
   playerRef: RefObject<HTMLVideoElement>;
   setLiveState: Dispatch<SetStateAction<LiveState>>;
   debugInfo?: any;
+  onEnded?: Function;
+  onError?: Function;
 };
 
-export let LiveStreamContext: Context<ReturnType>;
+export let LiveStreamContext: Context<LiveStreamReturnType>;
 
-export default function useLiveStream() {
+export default function useLiveStream(options: LiveStreamInitOptions) {
   const [stream, setStream] = useState<MediaStream>();
   const [havePermission, setHavePermission] = useState(false);
   const [debugInfo, setDebugInfo] = useState("");
@@ -36,12 +45,14 @@ export default function useLiveStream() {
     video: false,
   });
   const playerRef = useRef<ElementRef<"video">>(null);
-  LiveStreamContext = createContext<ReturnType>({
+  LiveStreamContext = createContext<LiveStreamReturnType>({
     liveState,
     stream,
     havePermission,
     playerRef,
     setLiveState,
+    onEnded: options.onEnded,
+    onError: options.onError
   });
 
   const getMediaStream = async () => {
