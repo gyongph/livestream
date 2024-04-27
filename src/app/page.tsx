@@ -31,7 +31,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="whitespace-pre-wrap">{deviceCapabilities}</div>
+      <div className="whitespace-pre-line text-white">{deviceCapabilities}</div>
     </div>
   );
 }
