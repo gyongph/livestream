@@ -27,8 +27,8 @@ export default function Page({ searchParams: { debugMode = false } }) {
         <LiveStateIndicator />
         <div className="absolute flex flex-col items-end gap-7 right-3 top-3">
           <LiveAudienceCountIndicator />
-          <CamFacingModeController />
           <StopLiveStreamBtn />
+          <CamFacingModeController />
           <CamController />
           <MicController />
         </div>

@@ -11,6 +11,7 @@ import {
 
 import { useController } from "./hooks/useController";
 import { useLiveStreamContext } from "./hooks/useLiveStreamContext";
+import { useState } from "react";
 
 export function LiveStateIndicator() {
   const ctx = useLiveStreamContext();
@@ -27,7 +28,7 @@ export function LiveStateIndicator() {
 export function MicController() {
   const { liveState, toggleMic } = useController();
   return (
-    <>
+    <button className="active:scale-90 duration-100 ease-in-out">
       {liveState.audio ? (
         <BsMicFill
           onClick={toggleMic}
@@ -39,14 +40,14 @@ export function MicController() {
           className="fill-white w-8 h-8 aspect-square drop-shadow-md"
         />
       )}
-    </>
+    </button>
   );
 }
 
 export function CamController() {
   const { liveState, toggleCam } = useController();
   return (
-    <>
+    <button className="active:scale-90 duration-100 ease-in-out">
       {liveState.video ? (
         <MdVideocam
           onClick={toggleCam}
@@ -58,24 +59,33 @@ export function CamController() {
           className="fill-white w-8 h-8 aspect-square drop-shadow-md"
         />
       )}
-    </>
+    </button>
   );
 }
 export function CamFacingModeController() {
   const { toggleCamFacingMode } = useController();
+  const [isLoading, setIsLoading] = useState(false);
+  const clickHandler = async () => {
+    setIsLoading(true);
+    toggleCamFacingMode();
+    setIsLoading(false);
+  };
   return (
-    <MdCameraswitch
-      onClick={toggleCamFacingMode}
-      className="fill-white w-8 h-8 aspect-square"
-    />
+    <button className="active:-rotate-12 duration-100 ease-in-out active:scale-95">
+      <MdCameraswitch
+        aria-disabled={isLoading}
+        onClick={clickHandler}
+        className="fill-white rotate-0 w-8 h-8 aspect-square aria-disabled:pointer-events-none drop-shadow-md"
+      />
+    </button>
   );
 }
 
 export function LiveAudienceCountIndicator() {
   return (
     <div className="flex items-center gap-3">
-      <div className="text-white">200</div>
-      <FaEye className="fill-white" />
+      <div className="text-white font-medium">200</div>
+      <FaEye className="fill-white  w-8 h-8 scale-75" />
     </div>
   );
 }
@@ -83,10 +93,12 @@ export function LiveAudienceCountIndicator() {
 export function StopLiveStreamBtn() {
   const { endLiveStream } = useController();
   return (
-    <MdExitToApp
-      onClick={endLiveStream}
-      className="fill-white w-8 h-8 aspect-square"
-    />
+    <button className="active:translate-x-1 duration-100 ease-in-out">
+      <MdExitToApp
+        onClick={endLiveStream}
+        className="fill-white w-8 h-8 aspect-square drop-shadow-md"
+      />
+    </button>
   );
 }
 
