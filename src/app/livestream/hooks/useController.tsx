@@ -41,6 +41,7 @@ export const useController = () => {
       if (!newVideoTrack) return;
       ctx.stream.removeTrack(oldVideoTrack);
       ctx.stream.addTrack(newVideoTrack);
+      ctx.setLiveState({ ...ctx.liveState, video: true });
     },
     endLiveStream() {
       if (!(ctx.stream instanceof MediaStream)) return;
