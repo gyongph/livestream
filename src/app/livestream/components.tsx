@@ -19,7 +19,7 @@ export function LiveStateIndicator() {
       data-active={ctx.liveState.isActive}
       className="data-[active=true]:bg-red-500 bg-slate-600 text-white px-5 rounded-full w-fit absolute top-3 left-3"
     >
-     { ctx.liveState.isActive ? "LIVE" : "OFFLINE"}
+      {ctx.liveState.isActive ? "LIVE" : "OFFLINE"}
     </div>
   );
 }
@@ -59,6 +59,15 @@ export function CamController() {
         />
       )}
     </>
+  );
+}
+export function CamFacingModeController() {
+  const { toggleCamFacingMode } = useController();
+  return (
+    <MdCameraswitch
+      onClick={toggleCamFacingMode}
+      className="fill-white w-8 h-8 aspect-square"
+    />
   );
 }
 

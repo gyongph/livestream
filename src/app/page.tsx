@@ -10,6 +10,7 @@ import {
   MicController,
   CamController,
   StopLiveStreamBtn,
+  CamFacingModeController,
 } from "./livestream/components";
 
 export default function Page() {
@@ -24,8 +25,8 @@ export default function Page() {
         <LiveStateIndicator />
         <div className="absolute flex flex-col items-end gap-7 right-3 top-3">
           <LiveAudienceCountIndicator />
+          <CamFacingModeController />
           <StopLiveStreamBtn />
-          <MdCameraswitch className="fill-white w-8 h-8 aspect-square" />
           <CamController />
           <MicController />
         </div>
