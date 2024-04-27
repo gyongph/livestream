@@ -19,15 +19,20 @@ export const useController = () => {
       videoTrack.enabled = !ctx.liveState.video;
       ctx.setLiveState({ ...ctx.liveState, video: !ctx.liveState.video });
     },
-    toggleCamFacingMode() {
+    async toggleCamFacingMode() {
       if (!(ctx.stream instanceof MediaStream)) return;
-      const videoTrack = ctx.stream.getVideoTracks().pop();
-      if (!videoTrack) return;
-      const newMode =
-        ctx.liveState.facingMode === "user" ? "environment" : "user";
-      videoTrack.applyConstraints({
-        facingMode: newMode,
+      const oldVideoTrack = ctx.stream.getVideoTracks().pop();
+      if (!oldVideoTrack) return;
+      const oldMode = ctx.liveState.facingMode;
+      const newMode = oldMode === "user" ? "environment" : "user";
+      const videoStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: newMode },
       });
+      const newVideoTrack = videoStream.getVideoTracks().pop();
+      if (!newVideoTrack) return;
+      oldVideoTrack.stop();
+      ctx.stream.removeTrack(oldVideoTrack);
+      ctx.stream.addTrack(newVideoTrack);
       ctx.setLiveState({
         ...ctx.liveState,
         facingMode: newMode,
