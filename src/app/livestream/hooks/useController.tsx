@@ -25,7 +25,6 @@ export const useController = () => {
       if (!(ctx.stream instanceof MediaStream)) return;
       const oldVideoTrack = ctx.stream.getVideoTracks().pop();
       if (!oldVideoTrack) return;
-      oldVideoTrack.stop();
       const oldVideoDeviceId = oldVideoTrack.getSettings().deviceId;
       const newVideoDevice = (
         await navigator.mediaDevices.enumerateDevices()
@@ -34,6 +33,7 @@ export const useController = () => {
           device.deviceId !== oldVideoDeviceId && device.kind === "videoinput"
       );
       if (!newVideoDevice) return;
+      oldVideoTrack.stop();
       const videoStream = await navigator.mediaDevices.getUserMedia({
         video: { deviceId: newVideoDevice.deviceId },
         audio: false,
