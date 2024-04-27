@@ -1,6 +1,6 @@
 "use client";
 
-import useLiveStream from "./livestream/hooks/useLiveStream";
+import useLiveStream from "@/modules/livestream/hooks/useLiveStream";
 import {
   LiveAudienceCountIndicator,
   LiveStateIndicator,
@@ -9,7 +9,7 @@ import {
   StopLiveStreamBtn,
   CamFacingModeController,
   DebugInfo,
-} from "./livestream/components";
+} from "@/modules/livestream/components";
 import { v4 } from "uuid";
 const guestID = v4();
 
