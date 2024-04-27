@@ -18,12 +18,6 @@ export default function Page({ searchParams: { debugMode = false } }) {
       <div className="w-dvw h-dvh mt-0 relative">
         {playerRef && (
           <video
-            onClick={(e) => {
-              if (e.target instanceof HTMLVideoElement) {
-                if (e.target.paused) e.target.play();
-                else e.target.pause();
-              }
-            }}
             muted
             ref={playerRef}
             className="w-full h-full"
