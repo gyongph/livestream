@@ -21,7 +21,7 @@ export default function Page() {
         {playerRef && (
           <video ref={playerRef} className="w-full h-full" controls></video>
         )}
-        <div className=" break-all">{deviceCapabilities}</div>
+        <div className=" break-all whitespace-pre-line">{deviceCapabilities}</div>
         <LiveStateIndicator />
         <div className="absolute flex flex-col items-end gap-7 right-3 top-3">
           <LiveAudienceCountIndicator />
