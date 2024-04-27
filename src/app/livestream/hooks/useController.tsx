@@ -26,7 +26,10 @@ export const useController = () => {
       const oldVideoDeviceId = oldVideoTrack.getSettings().deviceId;
       const newVideoDevice = (
         await navigator.mediaDevices.enumerateDevices()
-      ).find((device) => device.deviceId !== oldVideoDeviceId);
+      ).find(
+        (device) =>
+          device.deviceId !== oldVideoDeviceId && device.kind === "videoinput"
+      );
       if (!newVideoDevice) return;
       const videoStream = await navigator.mediaDevices.getUserMedia({
         video: { deviceId: newVideoDevice.deviceId },
