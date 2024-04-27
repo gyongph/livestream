@@ -35,7 +35,7 @@ type LiveStreamReturnType = {
 
 export let LiveStreamContext: Context<LiveStreamReturnType>;
 
-export default function useLiveStream(options: LiveStreamInitOptions) {
+export function useLiveStream(options: LiveStreamInitOptions) {
   const [stream, setStream] = useState<MediaStream>();
   const [havePermission, setHavePermission] = useState(false);
   const [debugInfo, setDebugInfo] = useState("");
@@ -52,7 +52,7 @@ export default function useLiveStream(options: LiveStreamInitOptions) {
     playerRef,
     setLiveState,
     onEnded: options.onEnded,
-    onError: options.onError
+    onError: options.onError,
   });
 
   const getMediaStream = async () => {
