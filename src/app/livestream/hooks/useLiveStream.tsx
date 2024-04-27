@@ -23,11 +23,13 @@ export let context: Context<{
   havePermission: boolean;
   playerRef: RefObject<HTMLVideoElement>;
   setLiveState: Dispatch<SetStateAction<LiveState>>;
+  deviceCapabilities?: any;
 }>;
 
 export default function useLiveStream() {
   const [stream, setStream] = useState<MediaStream>();
   const [havePermission, setHavePermission] = useState(false);
+  const [deviceCapabilities, setDeviceCapabilities] = useState("");
   const [liveState, setLiveState] = useState<LiveState>({
     isActive: false,
     audio: false,
@@ -59,6 +61,10 @@ export default function useLiveStream() {
       isActive: true,
       facingMode: "user",
     });
+    const videoTracks = requestStream.getVideoTracks().pop();
+    if (!videoTracks) return;
+    const settings = videoTracks.getCapabilities() || {};
+    setDeviceCapabilities(JSON.stringify(settings));
   };
 
   useEffect(() => {
@@ -72,5 +78,5 @@ export default function useLiveStream() {
     if (typeof window === "undefined") return;
     getMediaStream();
   }, []);
-  return { playerRef, liveState, stream };
+  return { playerRef, liveState, stream, deviceCapabilities };
 }

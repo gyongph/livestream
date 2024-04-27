@@ -14,14 +14,14 @@ import {
 } from "./livestream/components";
 
 export default function Page() {
-  const { playerRef } = useLiveStream();
+  const { playerRef, deviceCapabilities } = useLiveStream();
   return (
     <div className="bg-black relative">
       <div className="w-dvw h-dvh mt-0 relative">
         {playerRef && (
           <video ref={playerRef} className="w-full h-full" controls></video>
         )}
-
+        <div className=" break-all">{deviceCapabilities}</div>
         <LiveStateIndicator />
         <div className="absolute flex flex-col items-end gap-7 right-3 top-3">
           <LiveAudienceCountIndicator />
