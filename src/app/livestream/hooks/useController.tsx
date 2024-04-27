@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { context } from "./useLiveStream";
+import delay from "../../../../utils/delay";
 
 export const useController = () => {
   const ctx = useContext(context);
@@ -23,6 +24,7 @@ export const useController = () => {
       if (!(ctx.stream instanceof MediaStream)) return;
       const oldVideoTrack = ctx.stream.getVideoTracks().pop();
       if (!oldVideoTrack) return;
+      oldVideoTrack.stop();
       const oldVideoDeviceId = oldVideoTrack.getSettings().deviceId;
       const newVideoDevice = (
         await navigator.mediaDevices.enumerateDevices()
@@ -30,13 +32,14 @@ export const useController = () => {
         (device) =>
           device.deviceId !== oldVideoDeviceId && device.kind === "videoinput"
       );
+      console.log(newVideoDevice);
       if (!newVideoDevice) return;
       const videoStream = await navigator.mediaDevices.getUserMedia({
         video: { deviceId: newVideoDevice.deviceId },
+        audio: false,
       });
       const newVideoTrack = videoStream.getVideoTracks().pop();
       if (!newVideoTrack) return;
-      oldVideoTrack.stop();
       ctx.stream.removeTrack(oldVideoTrack);
       ctx.stream.addTrack(newVideoTrack);
     },
