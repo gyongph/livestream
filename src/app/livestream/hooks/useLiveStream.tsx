@@ -59,7 +59,7 @@ export default function useLiveStream() {
       audio: true,
       video: true,
       isActive: true,
-      facingMode: "user",
+      facingMode: "environment",
     });
     const videoTracks = requestStream.getVideoTracks().pop();
     if (!videoTracks) return;
