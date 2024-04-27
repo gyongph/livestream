@@ -14,10 +14,10 @@ import {
 } from "./livestream/components";
 
 export default function Page() {
-  const { playerRef, liveState } = useLiveStream();
+  const { playerRef } = useLiveStream();
   return (
     <div className="bg-black relative">
-      <div className="w-screen h-screen mt-0 relative">
+      <div className="w-dvw h-dvh mt-0 relative">
         {playerRef && (
           <video ref={playerRef} className="w-full h-full" controls></video>
         )}
