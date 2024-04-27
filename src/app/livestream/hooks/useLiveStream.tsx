@@ -15,15 +15,16 @@ type LiveState = {
   audio: boolean;
   video: boolean;
 };
-
-export let context: Context<{
+type ReturnType = {
   liveState: LiveState;
-  stream: MediaStream | undefined;
+  stream?: MediaStream;
   havePermission: boolean;
   playerRef: RefObject<HTMLVideoElement>;
   setLiveState: Dispatch<SetStateAction<LiveState>>;
   debugInfo?: any;
-}>;
+};
+
+export let LiveStreamContext: Context<ReturnType>;
 
 export default function useLiveStream() {
   const [stream, setStream] = useState<MediaStream>();
@@ -35,7 +36,7 @@ export default function useLiveStream() {
     video: false,
   });
   const playerRef = useRef<ElementRef<"video">>(null);
-  context = createContext({
+  LiveStreamContext = createContext<ReturnType>({
     liveState,
     stream,
     havePermission,

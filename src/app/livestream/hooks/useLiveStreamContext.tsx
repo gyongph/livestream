@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { context } from "./useLiveStream";
+import { LiveStreamContext } from "./useLiveStream";
 
 export const useLiveStreamContext = () => {
-  const ctx = useContext(context);
+  const ctx = useContext(LiveStreamContext);
   return ctx;
 };

@@ -67,7 +67,7 @@ export function CamFacingModeController() {
   const [isLoading, setIsLoading] = useState(false);
   const clickHandler = async () => {
     setIsLoading(true);
-    toggleCamFacingMode();
+    await toggleCamFacingMode();
     setIsLoading(false);
   };
   return (

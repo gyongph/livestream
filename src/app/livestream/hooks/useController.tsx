@@ -1,9 +1,8 @@
 import { useContext } from "react";
-import { context } from "./useLiveStream";
-import delay from "../../../../utils/delay";
+import { LiveStreamContext } from "./useLiveStream";
 
 export const useController = () => {
-  const ctx = useContext(context);
+  const ctx = useContext(LiveStreamContext);
   return {
     liveState: ctx.liveState,
     debugInfo: ctx.debugInfo,
