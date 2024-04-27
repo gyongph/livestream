@@ -58,8 +58,16 @@ export default function useLiveStream() {
       video: true,
       isActive: true,
     });
+    const videoSettings = requestStream.getVideoTracks().pop()?.getSettings();
     const devices = await navigator.mediaDevices.enumerateDevices();
-    setDeviceCapabilities(JSON.stringify(devices, null, 2));
+    const otherVideoInput = devices.find(
+      (device) =>
+        device.deviceId !== videoSettings?.deviceId &&
+        device.kind === "videoinput"
+    );
+    setDeviceCapabilities(
+      JSON.stringify({ videoSettings, devices, otherVideoInput }, null, 2)
+    );
   };
 
   useEffect(() => {
