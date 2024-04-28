@@ -9,24 +9,27 @@ import {
   MdVideocamOff,
 } from "react-icons/md";
 
-import { useController, useLiveStreamContext } from "./hooks";
-import { useState } from "react";
+import { useController } from "./hooks";
+import { useEffect, useState } from "react";
+import { LiveStreamContext } from "./hooks/useLiveStream";
 
 export function LiveStreamPreview() {
-  const { playerRef } = useLiveStreamContext();
+  const { playerRef } = LiveStreamContext;
   return (
     <video muted ref={playerRef} className="w-full h-full" autoPlay></video>
   );
 }
 
 export function LiveStatusIndicator() {
-  const ctx = useLiveStreamContext();
+  // let ctx = LiveStreamContext; 
+  // useEffect(()=>console.log(ctx),[])
+  console.count('render time')
   return (
     <div
-      data-active={ctx.liveState.status === "live"}
+      // data-active={ctx.liveState.status === "live"}
       className="data-[active=true]:bg-red-500 bg-slate-600 text-white px-5 rounded-full w-fit absolute top-3 left-3 uppercase"
     >
-      {ctx.liveState.status}
+      {/* {ctx.liveState.status} */}
     </div>
   );
 }

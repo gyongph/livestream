@@ -1,11 +1,10 @@
 import {
-  Context,
   Dispatch,
   ElementRef,
   RefObject,
   SetStateAction,
-  createContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -22,9 +21,10 @@ type LiveStreamInitOptions = {
   onError?: Function;
 };
 
-type LiveStreamReturnType = {
+type ConstructorOptions = {
+  streamIngestURL: string;
   liveState: LiveState;
-  stream?: MediaStream;
+  stream: MediaStream | undefined;
   havePermission: boolean;
   playerRef: RefObject<HTMLVideoElement>;
   setLiveState: Dispatch<SetStateAction<LiveState>>;
@@ -33,7 +33,29 @@ type LiveStreamReturnType = {
   onError?: Function;
 };
 
-export let LiveStreamContext: Context<LiveStreamReturnType>;
+class LiveStream {
+  readonly liveState: LiveState;
+  readonly setLiveState: Dispatch<SetStateAction<LiveState>>;
+  readonly stream: MediaStream | undefined;
+  readonly havePermission: boolean;
+  readonly playerRef: RefObject<HTMLVideoElement>;
+  readonly debugInfo?: any;
+  private onEnded?: Function;
+  private onError?: Function;
+  private streamIngestURL: string;
+  constructor(opts: ConstructorOptions) {
+    this.stream = opts.stream;
+    this.liveState = opts.liveState;
+    this.setLiveState = opts.setLiveState;
+    this.onEnded = opts.onEnded;
+    this.onError = opts.onError;
+    this.playerRef = opts.playerRef;
+    this.havePermission = opts.havePermission;
+    this.streamIngestURL = opts.streamIngestURL;
+  }
+}
+
+export let LiveStreamContext: InstanceType<typeof LiveStream>;
 
 export function useLiveStream(options: LiveStreamInitOptions) {
   const [stream, setStream] = useState<MediaStream>();
@@ -45,16 +67,18 @@ export function useLiveStream(options: LiveStreamInitOptions) {
     video: false,
   });
   const playerRef = useRef<ElementRef<"video">>(null);
-  LiveStreamContext = createContext<LiveStreamReturnType>({
-    liveState,
-    stream,
-    havePermission,
-    playerRef,
-    setLiveState,
-    onEnded: options.onEnded,
-    onError: options.onError,
-  });
-
+  LiveStreamContext = useMemo(
+    () =>
+      new LiveStream({
+        stream,
+        havePermission: false,
+        liveState,
+        playerRef,
+        setLiveState,
+        ...options,
+      }),
+    [stream, debugInfo, liveState, havePermission]
+  );
   const getMediaStream = async () => {
     const requestStream = await window.navigator.mediaDevices
       .getUserMedia({
@@ -72,7 +96,7 @@ export function useLiveStream(options: LiveStreamInitOptions) {
       video: true,
       status: "waiting",
     });
-    const videoTrack = requestStream.getVideoTracks().pop()
+    const videoTrack = requestStream.getVideoTracks().pop();
     const videoSettings = videoTrack?.getSettings();
     const devices = await navigator.mediaDevices.enumerateDevices();
     const otherVideoInput = devices.find(
