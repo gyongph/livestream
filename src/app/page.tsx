@@ -23,7 +23,7 @@ export default function Page() {
           LiveStream
         </h1>
         <CarouselDemo />
-        <Button asChild size="lg" className="mt-auto mb-0">
+        <Button asChild size="lg" className="mt-auto mb-0 text-xl">
           <Link href={"/creator"}> Start ur LiveStream</Link>
         </Button>
       </div>
@@ -55,7 +55,7 @@ function CarouselDemo() {
       plugins={[
         Autoplay({
           delay: 3000,
-          stopOnInteraction: false,
+          pause: false,
         }),
       ]}
       className="mx-auto w-full overflow-visible"
@@ -66,8 +66,8 @@ function CarouselDemo() {
       <CarouselContent className="overflow-visible">
         {Array.from({ length: 5 }).map((_, index) => (
           <CarouselItem key={index}>
-            <div className="p-1">
-              <Card>
+            <div className="p-1 transition-all">
+              <Card className="">
                 <CardContent className="flex aspect-[16/19] items-center justify-center p-6 w-full">
                   <span className="text-4xl font-semibold">{index + 1}</span>
                 </CardContent>

@@ -1,7 +1,7 @@
-import { LiveStreamContext } from "./useLiveStream";
+import { useLiveStreamContext } from "../components/LiveStreamer";
 
 export const useController = () => {
-  const ctx = LiveStreamContext;
+  const ctx = useLiveStreamContext();
   return {
     liveState: ctx.liveState,
     debugInfo: ctx.debugInfo,
