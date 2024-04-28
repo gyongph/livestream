@@ -18,7 +18,7 @@ import RootContainer from "@/components/RootContainer";
 export default function Page() {
   return (
     <RootContainer>
-      <div className="bg-gradient-to-b p-1 h-full flex flex-col from-slate-500 via-slate-50 to-slate-50 overflow-hidden">
+      <div className="bg-gradient-to-b p-1 h-full flex flex-col from-slate-500 via-slate-50 to-slate-50 overflow-hidden rounded-md">
         <h1 className="mx-auto w-fit font-medium text-2xl mt-12 mb-5 text-white">
           LiveStream
         </h1>
@@ -68,7 +68,7 @@ function CarouselDemo() {
           <CarouselItem key={index}>
             <div className="p-1 transition-all">
               <Card className="">
-                <CardContent className="flex aspect-[16/19] items-center justify-center p-6 w-full">
+                <CardContent className="flex aspect-[19/19] sm:aspect-[16/19] items-center justify-center p-6 w-full">
                   <span className="text-4xl font-semibold">{index + 1}</span>
                 </CardContent>
               </Card>

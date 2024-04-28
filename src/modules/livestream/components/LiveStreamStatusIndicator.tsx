@@ -1,4 +1,4 @@
-import { useLiveStreamContext } from "./LiveStreamer";
+import { useLiveStreamContext } from "../hooks/useLiveStreamer";
 
 export function LiveStatusIndicator() {
     let ctx = useLiveStreamContext();
