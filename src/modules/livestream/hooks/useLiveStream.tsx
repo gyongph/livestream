@@ -120,8 +120,10 @@ export function useLiveStream(options: LiveStreamInitOptions) {
   }, [stream, playerRef.current]);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    getMediaStream();
+    if (typeof window !== "undefined") getMediaStream();
+    return () => {
+      stream?.getTracks().forEach((track) => track.stop());
+    };
   }, []);
   return { playerRef, liveState, stream, debugInfo };
 }
