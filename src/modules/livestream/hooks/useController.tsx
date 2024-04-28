@@ -48,10 +48,7 @@ export const useController = () => {
     endLiveStream() {
       if (ctx.liveState.status === "ended") return;
       if (!(ctx.stream instanceof MediaStream)) return;
-      const audioTrack = ctx.stream.getAudioTracks().pop();
-      const videoTrack = ctx.stream.getVideoTracks().pop();
-      audioTrack?.stop();
-      videoTrack?.stop();
+      ctx.stream.getTracks().forEach((track) => track.stop());
       ctx.setLiveState({ status: "ended", video: false, audio: false });
     },
   };

@@ -18,7 +18,7 @@ import RootContainer from "@/components/RootContainer";
 export default function Page() {
   return (
     <RootContainer>
-      <div className="bg-gradient-to-b p-1 flex flex-col from-slate-500 via-slate-50 to-slate-50 w-full h-full">
+      <div className="bg-gradient-to-b p-1 h-full flex flex-col from-slate-500 via-slate-50 to-slate-50">
         <h1 className="mx-auto w-fit font-medium text-2xl mt-12 mb-5 text-white">
           LiveStream
         </h1>
@@ -31,7 +31,7 @@ export default function Page() {
   );
 }
 
-export function CarouselDemo() {
+function CarouselDemo() {
   const [api, setState] = React.useState<CarouselApi>();
 
   const [current, setCurrent] = React.useState(0);
