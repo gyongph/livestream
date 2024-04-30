@@ -13,21 +13,27 @@ import {
 import Autoplay from "embla-carousel-autoplay";
 import { Button } from "@/components/ui/button";
 
+import { FaArrowRightToBracket } from "react-icons/fa6";
+
 import RootContainer from "@/components/RootContainer";
 
 export default function Page() {
   return (
-    <RootContainer>
-      <div className="bg-gradient-to-b p-1 h-full flex flex-col from-slate-500 via-slate-50 to-slate-50 overflow-hidden rounded-md">
-        <h1 className="mx-auto w-fit font-medium text-2xl mt-12 mb-5 text-white">
-          LiveStream
-        </h1>
-        <CarouselDemo />
-        <Button asChild size="lg" className="mt-auto mb-0 text-xl">
-          <Link href={"/creator"}> Start ur LiveStream</Link>
-        </Button>
-      </div>
-    </RootContainer>
+    <div className="bg-gradient-to-b p-1 h-full flex flex-col from-slate-500 via-slate-50 to-slate-50 overflow-hidden rounded-md">
+      <h1 className="mx-auto w-fit font-medium text-2xl mt-12 mb-5 text-white">
+        LiveStream
+      </h1>
+      <CarouselDemo />
+      <Button
+        asChild
+        size="lg"
+        className="mt-auto mb-0 text-xl flex gap-3 data-[toggle=true]:hidden duration-500"
+      >
+        <Link href={"/creator"} prefetch>
+          Start ur LiveStream <FaArrowRightToBracket />
+        </Link>
+      </Button>
+    </div>
   );
 }
 

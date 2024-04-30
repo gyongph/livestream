@@ -39,7 +39,10 @@ export const useLiveStreamContext = () => {
   return ctx;
 };
 
-export const useLiveStreamer = ({ streamIngestURL }: UseLiveStreamProps) => {
+export const useLiveStreamer = ({
+  streamIngestURL,
+  onEnded,
+}: UseLiveStreamProps) => {
   const [stream, setStream] = useState<MediaStream>();
   const [havePermission, setHavePermission] = useState(false);
   const [debugInfo, setDebugInfo] = useState("");
@@ -82,7 +85,11 @@ export const useLiveStreamer = ({ streamIngestURL }: UseLiveStreamProps) => {
       )
     );
   };
-
+  useEffect(() => {
+    if (liveState.status === "ended") {
+      onEnded && onEnded();
+    }
+  }, [liveState]);
   useEffect(() => {
     if (!stream || !playerRef.current) return;
     if (playerRef.current instanceof Element) {

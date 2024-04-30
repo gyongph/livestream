@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.19",
     "@radix-ui/react-slot": "^1.0.2",
     "@types/node": "20.4.9",
     "@types/react": "18.2.20",
@@ -29,6 +30,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^5.1.0",
+    "react-reverse-portal": "^2.1.2",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.1.6",
