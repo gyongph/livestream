@@ -14,6 +14,7 @@ import {
   ControlPanel,
 } from "@/modules/livestream/components";
 import { v4 } from "uuid";
+import ErrorBox from "../components/ErrorBox";
 const guestID = v4();
 
 export default function CreatorPage({
@@ -22,7 +23,7 @@ export default function CreatorPage({
 }) {
   return (
     <LiveStreamer streamIngestURL="" onEnded={onEnded}>
-      <div className="w-full h-full mt-0 relative drop-shadow-2xl shadow-sm shadow-white overflow-hidden">
+      <div className="w-full h-full border mt-0 relative drop-shadow-2xl shadow-sm shadow-white overflow-clip">
         <LiveStreamPreview />
         <LiveStatusIndicator />
         <ControlPanel>
@@ -32,6 +33,7 @@ export default function CreatorPage({
           <CamController />
           <MicController />
         </ControlPanel>
+        <ErrorBox/>
       </div>
 
       {searchParams.debugMode && <DebugInfoBox />}

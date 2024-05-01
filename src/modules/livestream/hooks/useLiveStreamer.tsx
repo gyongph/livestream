@@ -15,6 +15,7 @@ type LiveState = {
   status: "initializing" | "waiting" | "live" | "idle" | "ended" | "error";
   audio: boolean;
   video: boolean;
+  error?: string;
 };
 
 export type UseLiveStreamProps = {
@@ -42,6 +43,7 @@ export const useLiveStreamContext = () => {
 export const useLiveStreamer = ({
   streamIngestURL,
   onEnded,
+  onError,
 }: UseLiveStreamProps) => {
   const [stream, setStream] = useState<MediaStream>();
   const [havePermission, setHavePermission] = useState(false);
@@ -59,7 +61,14 @@ export const useLiveStreamer = ({
         audio: true,
         video: true,
       })
-      .catch((err) => console.log({ err }));
+      .catch((err: Error) => {
+        onError && onError(err);
+        setLiveState((curr) => ({
+          ...curr,
+          error: err.message,
+          status: "error",
+        }));
+      });
     if (!requestStream) return setHavePermission(false);
     setHavePermission(true);
     setStream(requestStream);
