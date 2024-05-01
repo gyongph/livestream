@@ -23,7 +23,7 @@ export default function CreatorPage({
 }) {
   return (
     <LiveStreamer streamIngestURL="" onEnded={onEnded}>
-      <div className="w-full h-full border mt-0 relative drop-shadow-2xl shadow-sm shadow-white overflow-clip">
+      <div className="w-full h-full mt-0 relative">
         <LiveStreamPreview />
         <LiveStatusIndicator />
         <ControlPanel>
