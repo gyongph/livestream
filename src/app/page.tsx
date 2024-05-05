@@ -23,7 +23,12 @@ export default function Page() {
   const router = useRouter();
   return (
     <div className="bg-gradient-to-b p-1 h-full flex flex-col from-slate-500 via-slate-50 to-slate-50 overflow-hidden rounded-md">
-      <h1 className="mx-auto w-fit font-medium text-2xl mt-12 mb-5 text-white">
+      <h1
+        style={{
+          viewTransitionName: "live-status",
+        }}
+        className="mx-auto w-fit font-medium text-2xl mt-12 mb-5 text-white"
+      >
         LiveStream
       </h1>
       <CarouselDemo />

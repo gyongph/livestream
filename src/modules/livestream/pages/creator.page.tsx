@@ -24,7 +24,9 @@ export default function CreatorPage({
   return (
     <LiveStreamer streamIngestURL="" onEnded={onEnded}>
       <div
-        style={{ viewTransitionName: "player" }}
+        style={{
+          viewTransitionName: "player",
+        }}
         className="w-full h-full mt-0 relative vt-name-[player]"
       >
         <LiveStreamPreview />
