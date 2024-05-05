@@ -6,7 +6,8 @@ import RootContainer from "@/components/RootContainer";
 const inter = Inter({ subsets: ["latin"] });
 
 import { EnableNextAppRouterViewTransitions } from "use-view-transitions/next";
-import ProgressBar from "@/components/ProgressBar";
+// import ProgressBar from "@/components/ProgressBar";
+import { AppProgressBar } from "next-nprogress-bar";
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -17,7 +18,7 @@ export default function RootLayout({
       <EnableNextAppRouterViewTransitions />
       <body className={inter.className + " bg-black"}>
         <RootContainer>
-          {/* <ProgressBar /> */}
+          <AppProgressBar />
           {children}
         </RootContainer>
       </body>
