@@ -23,7 +23,10 @@ export default function CreatorPage({
 }) {
   return (
     <LiveStreamer streamIngestURL="" onEnded={onEnded}>
-      <div className="w-full h-full mt-0 relative">
+      <div
+        style={{ viewTransitionName: "player" }}
+        className="w-full h-full mt-0 relative vt-name-[player]"
+      >
         <LiveStreamPreview />
         <LiveStatusIndicator />
         <ControlPanel>
@@ -33,7 +36,7 @@ export default function CreatorPage({
           <CamController />
           <MicController />
         </ControlPanel>
-        <ErrorBox/>
+        <ErrorBox />
       </div>
 
       {searchParams.debugMode && <DebugInfoBox />}

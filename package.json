@@ -25,6 +25,8 @@
     "hls.js": "^1.5.8",
     "lucide-react": "^0.376.0",
     "next": "^14.0.4",
+    "next-nprogress-bar": "^2.3.11",
+    "next-view-transitions": "^0.1.1",
     "nextjs-toploader": "^1.6.12",
     "postcss": "8.4.31",
     "react": "18.2.0",
@@ -34,6 +36,7 @@
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.1.6",
+    "use-view-transitions": "^1.0.16",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

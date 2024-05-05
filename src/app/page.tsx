@@ -15,9 +15,12 @@ import { Button } from "@/components/ui/button";
 
 import { FaArrowRightToBracket } from "react-icons/fa6";
 
-import RootContainer from "@/components/RootContainer";
+import { useViewTransition } from "use-view-transitions/react";
+import { useRouter } from "next-nprogress-bar";
 
 export default function Page() {
+  const { startViewTransition } = useViewTransition();
+  const router = useRouter();
   return (
     <div className="bg-gradient-to-b p-1 h-full flex flex-col from-slate-500 via-slate-50 to-slate-50 overflow-hidden rounded-md">
       <h1 className="mx-auto w-fit font-medium text-2xl mt-12 mb-5 text-white">
@@ -25,13 +28,14 @@ export default function Page() {
       </h1>
       <CarouselDemo />
       <Button
-        asChild
+        style={{
+          viewTransitionName: "player",
+        }}
+        onClick={() => startViewTransition(() => router.push("/creator"))}
         size="lg"
-        className="mt-auto mb-0 text-xl flex gap-3 data-[toggle=true]:hidden duration-500"
+        className="mt-auto vt-name-[player] mb-0 text-xl flex gap-3 data-[toggle=true]:hidden duration-500"
       >
-        <Link href={"/creator"} prefetch>
-          Start ur LiveStream <FaArrowRightToBracket />
-        </Link>
+        Start ur LiveStream <FaArrowRightToBracket />
       </Button>
     </div>
   );
